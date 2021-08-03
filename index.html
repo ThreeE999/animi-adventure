@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title</title>
+    <script type="text/javascript" src="./jquery-3.6.0.min.js"></script>
+    <style>
+        .year {
+            text-align: center;
+        }
+    </style>
+    <script>
+        const NOW_YEAR = new Date().getFullYear();
+        $(document).ready(function () {
+            var years = '';
+            for(var i=NOW_YEAR; i>=2010; i--)
+            {
+                years += "<div><a href=\"./animi/" + i + ".html\">" + i + "年</a></div>";
+            }
+            $(".year").append(years);
+        });
+    </script>
+
+</head>
+<body>
+    <!-- <div class="year"><button onclick="add_years()">click</button><a href="./animi/2020.html">2020年</a></div> -->
+    <div class="year"></div>
+</body>
+</html>
+
