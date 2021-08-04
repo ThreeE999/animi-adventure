@@ -2,6 +2,64 @@
  * @Author: ThreeE_Zhuang
  * @Date: 2021-08-03 12:10:23
  * @LastEditors: ThreeE_Zhuang
- * @LastEditTime: 2021-08-03 12:10:24
+ * @LastEditTime: 2021-08-04 17:10:00
  * @Description: file content
 -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2020年</title>
+    <link rel="stylesheet" type="text/css" href="../css/table.css">
+    <link rel="stylesheet" type="text/css" href="../css/checkbox.css">
+
+    <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="../js/table.js"></script>
+    <script>
+        var DATA = [
+            ['内容1', '内容2'],
+            ['内容3', '内容4'],
+        ];
+
+        $(document).ready(function () {table(DATA)});
+        
+        function display_all() {
+            $(".hide-col").removeClass('hide-col')
+            $(".toggle__input").prop('checked',true);
+            $(".toggle__input").attr('checked',true)
+        }
+
+        function select_change(obj) {
+            console.log(1)
+        }
+
+        function change_col(obj) {
+            
+            if ($(obj).attr('checked')) 
+            {
+                $(obj).attr('checked',false);
+                $("."+$(obj).attr('col')).addClass("hide-col");
+            }else{
+                $(obj).attr('checked',true);
+                $("."+$(obj).attr('col')).removeClass("hide-col");
+            }
+            
+        }
+    </script>
+
+</head>
+<body>
+
+    <div class="func">
+        <button onclick="display_all()">恢复所有列</button>
+    </div>
+    <div class="check-box">
+    </div>
+    <div class="quarter">1月（冬番）</div>
+    <div class="table-wrapper">
+        <table id='winter' class="fl-table"></table>
+    </div>
+</body>
+</html>
