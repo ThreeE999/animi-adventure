@@ -2,7 +2,7 @@
  * @Author: ThreeE_Zhuang
  * @Date: 2021-08-03 12:10:23
  * @LastEditors: ThreeE_Zhuang
- * @LastEditTime: 2021-08-04 17:10:00
+ * @LastEditTime: 2021-08-06 14:37:29
  * @Description: file content
 -->
 <!DOCTYPE html>
@@ -17,10 +17,18 @@
 
     <script type="text/javascript" src="../js/jquery-3.6.0.min.js"></script>
     <script type="text/javascript" src="../js/table.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="../js/vue.min.js"></script>
     <script>
+        // |封面|作品名|日文名|作品介绍|动画链接|制作公司|相关&后续|观看时刻|
+
         var DATA = [
-            ['内容1', '内容2'],
-            ['内容3', '内容4'],
+            [add_img('https://lain.bgm.tv/pic/cover/c/72/8f/1839_4dLsd.jpg'), '仰望半月的夜空', '半分の月がのぼる空', `${add_a('https://www.wikiwand.com/zh-cn/仰望半月的夜空', 'wiki')}<br />${add_a('https://bgm.tv/subject/1839', 'bangumi')}`, add_a('https://www.bilibili.com/bangumi/media/md1391/', 'bilibili'), 'Tac', ''],
+            [add_img('https://lain.bgm.tv/pic/cover/c/72/8f/1839_4dLsd.jpg'), '仰望半月的夜空', '半分の月がのぼる空', `${add_a('https://www.wikiwand.com/zh-cn/仰望半月的夜空', 'wiki')}<br />${add_a('https://bgm.tv/subject/1839', 'bangumi')}`, add_a('https://www.bilibili.com/bangumi/media/md1391/', 'bilibili'), 'Tac', ''],
+            [add_img('https://lain.bgm.tv/pic/cover/c/72/8f/1839_4dLsd.jpg'), '仰望半月的夜空', '半分の月がのぼる空', `${add_a('https://www.wikiwand.com/zh-cn/仰望半月的夜空', 'wiki')}<br />${add_a('https://bgm.tv/subject/1839', 'bangumi')}`, add_a('https://www.bilibili.com/bangumi/media/md1391/', 'bilibili'), 'Tac', ''],
+            [add_img('https://lain.bgm.tv/pic/cover/c/72/8f/1839_4dLsd.jpg'), '仰望半月的夜空', '半分の月がのぼる空', `${add_a('https://www.wikiwand.com/zh-cn/仰望半月的夜空', 'wiki')}<br />${add_a('https://bgm.tv/subject/1839', 'bangumi')}`, add_a('https://www.bilibili.com/bangumi/media/md1391/', 'bilibili'), 'Tac', ''],
+            [add_img('https://lain.bgm.tv/pic/cover/c/72/8f/1839_4dLsd.jpg'), '仰望半月的夜空', '半分の月がのぼる空', `${add_a('https://www.wikiwand.com/zh-cn/仰望半月的夜空', 'wiki')}<br />${add_a('https://bgm.tv/subject/1839', 'bangumi')}`, add_a('https://www.bilibili.com/bangumi/media/md1391/', 'bilibili'), 'Tac', ''],
+            [add_img('https://lain.bgm.tv/pic/cover/c/72/8f/1839_4dLsd.jpg'), '仰望半月的夜空', '半分の月がのぼる空', `${add_a('https://www.wikiwand.com/zh-cn/仰望半月的夜空', 'wiki')}<br />${add_a('https://bgm.tv/subject/1839', 'bangumi')}`, add_a('https://www.bilibili.com/bangumi/media/md1391/', 'bilibili'), 'Tac', ''],
         ];
 
         $(document).ready(function () {table(DATA)});
@@ -29,6 +37,15 @@
             $(".hide-col").removeClass('hide-col')
             $(".toggle__input").prop('checked',true);
             $(".toggle__input").attr('checked',true)
+        }
+
+        function display_back() {
+            item = $(".toggle__input")
+            for(let i=0; i<item.length; i++)
+            {
+                item[i].checked = !item[i].checked
+                
+            }
         }
 
         function select_change(obj) {
@@ -40,26 +57,47 @@
             if ($(obj).attr('checked')) 
             {
                 $(obj).attr('checked',false);
-                $("."+$(obj).attr('col')).addClass("hide-col");
+                // $("."+$(obj).attr('col')).addClass("hide-col");
             }else{
                 $(obj).attr('checked',true);
-                $("."+$(obj).attr('col')).removeClass("hide-col");
+                // $("."+$(obj).attr('col')).removeClass("hide-col");
             }
             
         }
+
+        var col = new Vue({
+            el: 'th',
+            data: {
+                c: 'col'
+            }
+        })
     </script>
 
 </head>
 <body>
-
+    <div>
+        <input type="checkbox" id="toggle" class="unfolder"/> 
+        <label for="toggle" class="toggle-label"><span class="unfold-icon">&#9654;</span><span class="fold-icon">&#9660;</span> Title</label>
+                  
+        <div class="fold">
+            <button onclick="display_all()">全选</button>
+            <button onclick="display_back()">反选</button>
+            <div class="check-box"></div>
+         </div>
+      </div>
+      
     <div class="func">
-        <button onclick="display_all()">恢复所有列</button>
+        
     </div>
-    <div class="check-box">
-    </div>
+
+    
     <div class="quarter">1月（冬番）</div>
-    <div class="table-wrapper">
-        <table id='winter' class="fl-table"></table>
+    <!-- <div class="table-wrapper"> -->
+    <div class="wrap-table100">
+        <div class="table100">
+            <!-- <table id='winter' class="fl-table"></table> -->
+            <table id='winter'></table>
+        </div>
     </div>
 </body>
 </html>
