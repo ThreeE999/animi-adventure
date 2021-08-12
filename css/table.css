@@ -140,7 +140,7 @@
       top: 0;
     }
     /* |封面|作品名|日文名|作品介绍|动画链接|制作公司|相关&后续|观看时刻| */
-    table tbody tr td:nth-child(1):before {
+    /* table tbody tr td:nth-child(1):before {
       content: "封面";
     }
     table tbody tr td:nth-child(2):before {
@@ -156,17 +156,48 @@
       content: "动画链接";
     }
     table tbody tr td:nth-child(6):before {
-      content: "制作公司";
+        content: "演员表";
     }
     table tbody tr td:nth-child(7):before {
-        content: "相关&后续";
+      content: "制作公司";
     }
     table tbody tr td:nth-child(8):before {
-        content: "观看时刻";
+        content: "话数";
     }
-    /* table tbody tr td:nth-child(6):before {
-        content: "制作公司";
+    table tbody tr td:nth-child(9):before {
+        content: "相关&后续";
+    }
+    table tbody tr td:nth-child(10):before {
+        content: "观看时刻";
     } */
+    .tb-image::before {
+        content: "封面";
+    }
+    .tb-name_zh::before {
+        content: "作品名";
+    }
+    .tb-name_jp::before {
+        content: "日文名";
+    }
+    .tb-detail::before {
+        content: "作品介绍";
+    }
+    .tb-vedio::before {
+        content: "动画链接";
+    }
+    .tb-cast::before {
+        content: "演员表";
+    }
+    .tb-company::before {
+        content: "制作公司";
+    }
+    .tb-episode::before {
+        content: "话数";
+    }
+    .tb-link::before {
+        content: "相关&后续";
+    }
+
   
     /* .column4,
     .column5,
@@ -192,6 +223,7 @@
     .wrap-table100 {
       padding-left: 15px;
       padding-right: 15px;
+      margin-top: 15px;
     }
   /* } */
 

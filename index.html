@@ -17,7 +17,7 @@
             var years = '';
             for(var i=NOW_YEAR; i>=2010; i--)
             {
-                years += "<div><a href=\"./animi/" + i + ".html\">" + i + "年</a></div>";
+                years += `<div><a href="./animi/${i}.html">${i}年</a></div>`;
             }
             $(".year").append(years);
         });

@@ -1,0 +1,196 @@
+<!--
+ * @Author: ThreeE_Zhuang
+ * @Date: 2021-08-10 14:58:50
+ * @LastEditors: ThreeE_Zhuang
+ * @LastEditTime: 2021-08-12 15:53:36
+ * @Description: file content
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/checkbox.css">
+    <link rel="stylesheet" href="../css/table.css">
+    <!-- <title>年</title> -->
+    <script src="../js/vue.min.js"></script>
+    <script src="../js/utils.js"></script>
+    <script type="text/javascript">
+        const HEAD = {image:'封面', name_zh:'中文名', name_jp:'原名', detail:'作品介绍', vedio:'动画链接', cast:'演员表', company:'制作公司', episode:"话数", link:'相关&后续'};
+        
+        let DATA = window.parent.DATA
+        let col = {}
+        let row = {}
+
+
+        if(window.localStorage.getItem("col")) {
+            col = JSON.parse(window.localStorage.getItem("col"));
+        } else {
+            col = {
+                    id: false,
+                    season: false,
+                    image: true,
+                    name_zh: true,
+                    name_jp: true,
+                    detail: true,
+                    vedio: true,
+                    company: true,
+                    link: true,
+                    cast: true,
+                    episode: true
+            }
+        }
+        if(window.localStorage.getItem("row")) {
+            row = JSON.parse(window.localStorage.getItem("row"));
+        } else {
+            row = {
+                    win: true,
+                    spr: true,
+                    sum: true,
+                    aut: true,
+            }
+        }
+
+    </script>
+    <!-- <style>
+        .come{
+            animation: test 1s;
+        }
+        .go{
+            animation: test 1s reverse;
+        }
+        @keyframes test {
+            from{
+                transform: translatey(-50px);
+            }
+            to{
+                transform: translatey(0px);
+            }
+        }
+    </style> -->
+</head>
+<body>
+    <div id='main'>
+        <div>
+            <input type="checkbox" id="toggle" class="unfolder"/> 
+            <label for="toggle" class="toggle-label">
+                <span class="unfold-icon">&#9654;</span>
+                <span class="fold-icon">&#9660;</span> 选择查看字段
+            </label>
+                    
+            <div class="fold come">
+                <button @click="allchange(1)">全选</button>
+                <button @click="allchange(0)">反选</button>
+                <div class="page__section page__custom-settings">
+                    <div class="page__toggle"  v-for="v, k, i in heads" :key="i">
+                        <label class="toggle">
+                            <input class="toggle__input" type="checkbox" v-model="col[k]">
+                            <span class="toggle__label">
+                            <span class="toggle__text">{{v}}</span>
+                            </span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="table-wrapper"> -->
+        <div class="wrap-table100">
+            <div class="table100">
+                <table id='winter'>
+                    <thead>
+                        <tr>
+                            <th v-for="v, k, i in heads" :key="i" v-if="col[k]">{{v}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template v-for="sname,season in tbtitle">
+                            <tr @click="rowhide(season)">
+                                <th :colspan="headlen">{{sname}}</th>
+                            </tr>
+                            <tr v-for="d in datas[season]" :key="d.id" class="season" v-if="row[season]" >
+                                <td class="tb-image" v-if="col.image">
+                                    <img :src="d.image" height="100"/>
+                                </td>
+                                <td class="tb-name_zh" v-if="col.name_zh" v-html="d.name_zh"></td>
+                                <td class="tb-name_jp" v-if="col.name_jp" v-html="d.name_jp"></td>
+                                <td class="tb-detail" v-if="col.detail" >
+                                    <a v-for="vherf,kname in d.detail" :href="vherf">{{kname}}<br/></a>
+                                </td>
+                                <td class="tb-vedio" v-if="col.vedio" >
+                                    <a v-for="vherf,kname in d.vedio" :href="vherf">{{kname}}<br/></a>
+                                </td>
+                                <td class="tb-cast" v-if="col.cast" v-html="d.cast.slice(0,3).join('<br/>')"></td>
+                                <td class="tb-company" v-if="col.company" v-html="d.company"></td>
+                                <td class="tb-episode" v-if="col.episode">{{d.episode}}话</td>
+                                <td class="tb-link" v-if="col.link">
+                                    <a v-for="vherf,kname in d.link" :href="vherf">{{kname}}<br/></a>
+                                </td>
+                            </tr>
+
+                        </template>
+                        
+
+                    </tbody>
+                    
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        
+
+        let tb = new Vue({
+            el: '#main',
+            // template:'#template',
+            // components:{test},
+            data: {
+                heads: HEAD,
+                datas: DATA,
+                col: col,
+                row: row,
+                headlen: Object.keys(HEAD).length,
+                tbtitle: {
+                    win: '1月（冬番）',
+                    spr: '4月（春番）',
+                    sum: '7月（夏番）',
+                    aut: '10月（秋番）',
+                }
+            },
+            methods: {
+                rowhide(season){
+                    this.$data.row[season] = !this.$data.row[season]
+                },
+                allchange(bool){
+                    if(bool){
+                        for(let k in this.$data.heads){this.$data.col[k]=true}
+                    } else {
+                        for(let k in this.$data.heads){this.$data.col[k]=!this.$data.col[k]}
+                    }
+                }
+
+            },
+            watch: {
+                col: {
+                    handler: function (val, oldVal) { 
+                        window.localStorage.setItem('col',JSON.stringify(col))
+                    },
+                    deep: true
+                },
+                row: {
+                    handler: function (val, oldVal) { 
+                        window.localStorage.setItem('row',JSON.stringify(row))
+                    },
+                    deep: true
+                }
+            }
+        })
+        
+        
+        
+    </script>
+</body>
+</html>

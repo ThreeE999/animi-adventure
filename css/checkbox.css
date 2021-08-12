@@ -1,7 +1,7 @@
 .fold {
-    background: -webkit-linear-gradient(top, #e5e5e5, #ccc);
+    /* background: -webkit-linear-gradient(top, #e5e5e5, #ccc); */
 
-    color: #999;
+    /* color: #999; */
     -webkit-transition: all 0.3s linear;
     -moz-transition: all 0.3s linear;
     transition: all 0.3s linear;
@@ -156,10 +156,10 @@ CORE STYLES
   
   /* focus state */
   
-  .toggle:focus-within{
+  /* .toggle:focus-within{
     outline: var(--toggleOutlineWidthFocus, 3px) solid var(--toggleOutlineColorFocus, currentColor);
     outline-offset: var(--toggleOutlineOffsetFocus, 5px);
-  }
+  } */
   
   /* disabled state */
   
