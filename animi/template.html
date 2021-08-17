@@ -2,7 +2,7 @@
  * @Author: ThreeE_Zhuang
  * @Date: 2021-08-10 14:58:50
  * @LastEditors: ThreeE_Zhuang
- * @LastEditTime: 2021-08-12 15:53:36
+ * @LastEditTime: 2021-08-17 14:36:01
  * @Description: file content
 -->
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
     <script src="../js/vue.min.js"></script>
     <script src="../js/utils.js"></script>
     <script type="text/javascript">
-        const HEAD = {image:'封面', name_zh:'中文名', name_jp:'原名', detail:'作品介绍', vedio:'动画链接', cast:'演员表', company:'制作公司', episode:"话数", link:'相关&后续'};
+        const HEAD = {image:'封面', name_zh:'中文名', name_jp:'原名', detail:'作品介绍', vedio:'动画链接', cast:'演员表', company:'制作公司',original:"原作", startime:"开始日期",episode:"话数", link:'相关&后续'};
         
         let DATA = window.parent.DATA
         let col = {}
@@ -38,7 +38,9 @@
                     company: true,
                     link: true,
                     cast: true,
-                    episode: true
+                    episode: true,
+                    original:true,
+                    startime:true
             }
         }
         if(window.localStorage.getItem("row")) {
@@ -109,9 +111,9 @@
                             <tr @click="rowhide(season)">
                                 <th :colspan="headlen">{{sname}}</th>
                             </tr>
-                            <tr v-for="d in datas[season]" :key="d.id" class="season" v-if="row[season]" >
+                            <tr v-for="d in datas[season]" class="season" v-if="row[season]" >
                                 <td class="tb-image" v-if="col.image">
-                                    <img :src="d.image" height="100"/>
+                                    <img :src="d.image?d.image:'../img/404.jpg'" height="100"/>
                                 </td>
                                 <td class="tb-name_zh" v-if="col.name_zh" v-html="d.name_zh"></td>
                                 <td class="tb-name_jp" v-if="col.name_jp" v-html="d.name_jp"></td>
@@ -123,6 +125,10 @@
                                 </td>
                                 <td class="tb-cast" v-if="col.cast" v-html="d.cast.slice(0,3).join('<br/>')"></td>
                                 <td class="tb-company" v-if="col.company" v-html="d.company"></td>
+                                <td class="tb-original" v-if="col.original" v-html="d.original"></td>
+
+                                <td class="tb-startime" v-if="col.startime" v-html="d.startime"></td>
+
                                 <td class="tb-episode" v-if="col.episode">{{d.episode}}话</td>
                                 <td class="tb-link" v-if="col.link">
                                     <a v-for="vherf,kname in d.link" :href="vherf">{{kname}}<br/></a>

@@ -4,29 +4,97 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Title</title>
+    <title>动漫导航</title>
     <script type="text/javascript" src="./js/jquery-3.6.0.min.js"></script>
+    <script src="./js/vue.min.js"></script>
+    <script src="./js/utils.js"></script>
     <style>
         .year {
             text-align: center;
         }
+        .year span {
+            cursor: pointer ;
+            margin-left: 5px;
+            margin-right: 5px;
+            border: 2px;
+        }
+        .year .cursor-active{
+            color: #f12626;
+        }
+        
     </style>
-    <script>
-        const NOW_YEAR = new Date().getFullYear();
-        $(document).ready(function () {
-            var years = '';
-            for(var i=NOW_YEAR; i>=2010; i--)
-            {
-                years += `<div><a href="./animi/${i}.html">${i}年</a></div>`;
-            }
-            $(".year").append(years);
-        });
-    </script>
+    <style>
+        body{
+            margin:0; 
+            padding:0;
+            overflow-x:hidden; 
+            overflow-y:hidden;
+            text-align: center;
+            
+        }
+        iframe{
+            width: 100%;
+        }
+
+    </style>
+
 
 </head>
 <body>
     <!-- <div class="year"><button onclick="add_years()">click</button><a href="./animi/2020.html">2020年</a></div> -->
-    <div class="year"></div>
+    <div class="main" id="index">
+        <div class="year">
+            <button @click="curPreMove(false)"><</button>
+                <span v-for="i in arr(curYear)" @click="getData(i)" :class="watchYear==i?'cursor-active':''">{{i}}</span>
+            <button @click="curPreMove(true)">></button>
+
+        </div>
+        <div v-if="watchYear==0">
+            请选择一个年份开始吧~
+        </div>
+        
+        <iframe src="./animi/template.html" v-if="watchYear" :key="watchYear" frameborder="0" :height="document.documentElement.clientHeight"></iframe>
+    </div>
+    <script>
+        var DATA;
+        let main = new Vue({
+            el: '#index',
+            // template:'#template',
+            // components:{test},
+            data: {
+                startYear: 2010,
+                endYear: 2021,
+                watchYear: 0,
+                curYear: 2010,
+
+
+            },
+            methods: {
+                arr(curyear){
+                    return Array.from(new Array(curyear + 5 + 1).keys()).slice(curyear)
+                },
+                getData(year){
+                    this.$data.watchYear = year
+                },
+                curPreMove(next){
+                    if (next){
+                        this.$data.curYear = this.$data.curYear + 5 >= this.$data.endYear - 5 ? this.$data.endYear - 5 : this.$data.curYear + 5
+                    } else {
+                        this.$data.curYear = this.$data.curYear - 5 >= this.$data.startYear ? this.$data.curYear - 5 : this.$data.startYear
+                    }
+                }
+
+            },
+            watch: {
+                watchYear: {
+                    handler: function (val, oldVal) { 
+                        ajaxRequest('get', `../data/${val}.json`, function (data) { DATA=data });
+                    }
+                },
+            }
+        })
+        
+    </script>
 </body>
 </html>
 
