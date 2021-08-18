@@ -88,7 +88,7 @@
             watch: {
                 watchYear: {
                     handler: function (val, oldVal) { 
-                        ajaxRequest('get', `../data/${val}.json`, function (data) { DATA=data });
+                        ajaxRequest('get', `./data/${val}.json`, function (data) { DATA=data });
                     }
                 },
             }
